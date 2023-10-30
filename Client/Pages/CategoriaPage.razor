@@ -1,11 +1,15 @@
 ﻿@page "/categorias"
 @inject HttpClient HttpClient
-
+@inject NavigationManager NavigationManager
+@inject IToastService ToastService
+@inject SweetAlertService Swal
 
 <PageTitle>Categorias</PageTitle>
 
 <h3>Categorias</h3>
-<button type="button" class="btn btn-primary" @onclick="Cargar">Cargar Datos</button>
+<button type="button" class="btn btn-primary" @onclick="Cargar"><i class="bi bi-arrow-clockwise me-1"></i>Cargar Datos</button>
+@* <button type="button" class="btn btn-success" @onclick="Agregar">Agregar</button> *@
+<NavLink class="btn btn-success" href="categorias/crear"><i class="bi bi-plus-circle  me-1"></i>Agregar</NavLink>
 
 @if(Mostrar)
 {
@@ -24,6 +28,8 @@
 				<tr class="table-primary">
 					<th>Id</th>
 					<th>Nombre</th>
+					<th>Comentarios</th>
+					<th>Acciones</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -32,6 +38,11 @@
 					<tr>
 						<td>@item.Id</td>
 						<td>@item.Nombre</td>
+						<td>@item.Comentarios</td>
+						<td>
+							<button class="btn btn-secondary" @onclick="() => Editar(item.Id)"><i class="bi bi-pen-fill"></i></button>
+							<button class="btn btn-danger" @onclick="() => Eliminar(item.Id)"><i class="bi bi-trash3"></i></button>
+						</td>
 					</tr>
 				}
 			</tbody>
@@ -46,15 +57,69 @@
 
 	public bool Mostrar { get; set; }
 
+	protected override async Task OnInitializedAsync()
+	{
+		await Cargar();
+	}
+
 
 	private async Task Cargar()
 	{
-		Mostrar = true;
-
-		var response = await HttpClient.GetFromJsonAsync<ICollection<CategoriaDto>>("api/Categorias");
-		if (response != null)
+		try
 		{
-			Categorias = response;
+			Mostrar = true;
+
+			var rnd = new Random();
+			var valor = rnd.Next(1, 3);
+
+			if(valor == 2)
+			{
+				throw new InvalidOperationException("Error random");
+			}
+
+			var response = await HttpClient.GetFromJsonAsync<ICollection<CategoriaDto>>("api/Categorias");
+			if (response != null)
+			{
+				Categorias = response;
+			}
+		}
+		catch(Exception ex)
+		{
+			ToastService.ShowError(ex.Message);
+		}
+
+
+	}
+
+	private async Task Agregar()
+	{
+		await HttpClient.PostAsJsonAsync("api/Categorias", new CategoriaDto()
+			{
+				Nombre = "Categoria de prueba",
+				Comentarios = "Estoy probando el AddSingleton"
+			});
+
+		await Cargar();
+	}
+
+	private void Editar(int id)
+	{
+		NavigationManager.NavigateTo($"/categorias/editar/{id}");
+	}
+
+	public async Task Eliminar(int id)
+	{
+		var result = await Swal.FireAsync(new SweetAlertOptions("Desea eliminar el registro")
+			{
+				Title = "Eliminar",
+				Icon = SweetAlertIcon.Question,
+				ShowCancelButton = true
+			});
+
+		if (result.IsConfirmed)
+		{
+			await HttpClient.DeleteAsync($"api/Categorias/{id}");
+			await Cargar();
 		}
 	}
 }
