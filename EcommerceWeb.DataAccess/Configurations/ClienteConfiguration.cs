@@ -1,8 +1,8 @@
-﻿using EcommerceWeb.Server.Entities;
+﻿using EcommerceWeb.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace EcommerceWeb.Server.Configurations
+namespace EcommerceWeb.DataAccess.Configurations
 {
 	public class ClienteConfiguration : IEntityTypeConfiguration<Cliente>
 	{

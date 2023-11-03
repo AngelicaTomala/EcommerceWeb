@@ -1,8 +1,8 @@
-﻿using EcommerceWeb.Server.Entities;
+﻿using EcommerceWeb.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace EcommerceWeb.Server.Configurations
+namespace EcommerceWeb.DataAccess.Configurations
 {
 	public class ProductoConfiguration : IEntityTypeConfiguration<Producto>
 	{
@@ -15,9 +15,9 @@ namespace EcommerceWeb.Server.Configurations
 				.HasMaxLength(500);
 
 			builder.Property(p => p.PrecioUnitario)
-				.HasPrecision(11,2);
+				.HasPrecision(11, 2);
 
-			builder.Property(p =>p.UrlImagen)
+			builder.Property(p => p.UrlImagen)
 				.IsUnicode(false)
 				.HasMaxLength(600);
 		}

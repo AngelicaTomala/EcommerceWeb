@@ -1,4 +1,4 @@
-﻿using EcommerceWeb.Server.Entities;
+﻿using EcommerceWeb.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using System.Reflection;

@@ -23,11 +23,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Client\EcommerceWeb.Client.csproj" />
+    <ProjectReference Include="..\EcommerceWeb.DataAccess\EcommerceWeb.DataAccess.csproj" />
+    <ProjectReference Include="..\EcommerceWeb.Entities\EcommerceWeb.Entities.csproj" />
+    <ProjectReference Include="..\EcommerceWeb.Repositories\EcommerceWeb.Repositories.csproj" />
     <ProjectReference Include="..\Shared\EcommerceWeb.Shared.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Migrations\" />
   </ItemGroup>
 
 

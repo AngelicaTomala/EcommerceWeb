@@ -1,4 +1,4 @@
-﻿namespace EcommerceWeb.Server.Entities
+﻿namespace EcommerceWeb.Entities
 {
 	public class TipoCliente : EntityBase
 	{

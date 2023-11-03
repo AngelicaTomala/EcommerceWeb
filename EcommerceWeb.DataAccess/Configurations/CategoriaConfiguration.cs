@@ -1,9 +1,9 @@
-﻿using EcommerceWeb.Server.Entities;
+﻿using EcommerceWeb.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.Reflection.Emit;
 
-namespace EcommerceWeb.Server.Configurations
+namespace EcommerceWeb.DataAccess.Configurations
 {
 	public class CategoriaConfiguration : IEntityTypeConfiguration<Categoria>
 	{

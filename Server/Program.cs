@@ -1,4 +1,5 @@
-using EcommerceWeb.Server.Repositiry;
+using EcommerceWeb.Repositories.Implementaciones;
+using EcommerceWeb.Repositories.Interfaces;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 

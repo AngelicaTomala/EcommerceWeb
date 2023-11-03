@@ -1,11 +1,11 @@
-﻿using EcommerceWeb.Server.Entities;
-using EcommerceWeb.Server.Repositiry;
+﻿using EcommerceWeb.Entities;
+using EcommerceWeb.Repositories.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EcommerceWeb.Server.Controllers
 {
-	[Route("api/[controller]")]
+    [Route("api/[controller]")]
 	[ApiController]
 	public class CategoriasController : ControllerBase
 	{
@@ -57,8 +57,21 @@ namespace EcommerceWeb.Server.Controllers
 		[HttpPut("{id:int}")]
 		public async Task<IActionResult> Put(int id, Categoria request)
 		{
-			await _repository.UpdateAsync(id, request);
+			var registro = await _repository.FindAsync(id);
+
+            if (registro is null)
+            {
+				return NotFound();
+			} 
+
+			registro.Nombre = request.Nombre;
+			registro.Comentarios = request.Comentarios;
+			await _repository.UpdateAsync();
+
 			return Ok();
+
+			//await _repository.UpdateAsync(id, request);
+			//return Ok();
 		}
 
 		[HttpDelete("{id:int}")]
