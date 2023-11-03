@@ -1,0 +1,92 @@
+﻿@page "/marcas"
+@inject HttpClient HttpClient
+@inject NavigationManager NavigationManager
+@inject IToastService ToastService
+@inject SweetAlertService Swal
+
+<PageTitle>Marcas</PageTitle>
+
+<h3>Marcas</h3>
+<button type="button" class="btn btn-primary" @onclick="Cargar"><i class="bi bi-arrow-clockwise me-1"></i>Cargar Datos</button>
+<NavLink class="btn btn-success" href="marcas/crear"><i class="bi bi-plus-circle  me-1"></i>Agregar</NavLink>
+
+@if (Lista is null)
+{
+	<p class="alert alert-warning">Cargando ....</p>
+}
+else if (Lista.Count == 0)
+{
+	<p class="alert alert-info">No se encontro datos</p>
+}
+else
+{
+	<table class="table table-bordered table-hover mt-4">
+		<thead>
+			<tr class="table-primary">
+				<th>Id</th>
+				<th>Nombre</th>
+				<th>Acciones</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var item in Lista)
+			{
+				<tr>
+					<td>@item.Id</td>
+					<td>@item.Nombre</td>
+					<td>
+						<button class="btn btn-secondary" @onclick="() => Editar(item.Id)"><i class="bi bi-pen-fill"></i></button>
+						<button class="btn btn-danger" @onclick="() => Eliminar(item.Id)"><i class="bi bi-trash3"></i></button>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}
+
+@code {
+	public ICollection<MarcaDTO>? Lista { get; set; }
+
+	protected override async Task OnInitializedAsync()
+	{
+		await Cargar();
+	}
+
+
+	private async Task Cargar()
+	{
+		try
+		{
+			var response = await HttpClient.GetFromJsonAsync<ICollection<MarcaDTO>>("api/Marcas");
+			if (response != null)
+			{
+				Lista = response;
+			}
+		}
+		catch (Exception ex)
+		{
+			ToastService.ShowError(ex.Message);
+		}
+	}
+
+	private void Editar(int id)
+	{
+		NavigationManager.NavigateTo($"/marcas/editar/{id}");
+	}
+
+	public async Task Eliminar(int id)
+	{
+		var result = await Swal.FireAsync(new SweetAlertOptions("Desea eliminar el registro")
+			{
+				Title = "Eliminar",
+				Icon = SweetAlertIcon.Question,
+				ShowCancelButton = true
+			});
+
+		if (result.IsConfirmed)
+		{
+			await HttpClient.DeleteAsync($"api/Marcas/{id}");
+			await Cargar();
+		}
+	}
+}

@@ -1,0 +1,32 @@
+﻿@page "/marcas/editar/{Id:int}"
+@inject HttpClient HttpClient
+@inject NavigationManager NavigationManager
+
+<MarcaEditPage Marca="Registro" OnGrabar="Actualizar"></MarcaEditPage>
+
+@code {
+	[Parameter]
+	public int Id { get; set; }
+	public MarcaDTO Registro { get; set; } = new MarcaDTO();
+
+	protected override async Task OnParametersSetAsync()
+	{
+		await obtener();
+	}
+
+	private async Task obtener()
+	{
+		var response = await HttpClient.GetFromJsonAsync<MarcaDTO>($"api/Marcas/{Id}");
+
+		if (response is not null)
+		{
+			Registro = response;
+		}
+	}
+
+	private async Task Actualizar()
+	{
+		await HttpClient.PutAsJsonAsync($"api/Marcas/{Id}", Registro);
+		NavigationManager.NavigateTo("/marcas");
+	}
+}

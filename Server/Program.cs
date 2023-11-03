@@ -16,8 +16,11 @@ builder.Services.AddDbContext<EcommerceDbContext>(options =>
 });
 
 builder.Services.AddTransient<ICategoriaRepository, CategoriaRepository>();//cada vez que se llama al api llega al servidor crea una nueva instancia por eso no se ve el cambio
-//builder.Services.AddScoped<ICategoriaRepository, CategoriaMemoryRepository>();//la api rest no tiene instancia
-//builder.Services.AddSingleton<ICategoriaRepository, CategoriaMemoryRepository>();//si hace el efecto de agregar porque utiliza la misma instancia para la aplicacion
+																		   //builder.Services.AddScoped<ICategoriaRepository, CategoriaMemoryRepository>();//la api rest no tiene instancia
+																		   //builder.Services.AddSingleton<ICategoriaRepository, CategoriaMemoryRepository>();//si hace el efecto de agregar porque utiliza la misma instancia para la aplicacion
+
+builder.Services.AddTransient<IMarcaRepository, MarcaRepository>();
+builder.Services.AddTransient<IProductoRepository, ProductoRepository>();
 
 builder.Services.AddControllers();
 var app = builder.Build();
