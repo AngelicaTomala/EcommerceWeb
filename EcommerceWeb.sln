@@ -9,11 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EcommerceWeb.Client", "Clie
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EcommerceWeb.Shared", "Shared\EcommerceWeb.Shared.csproj", "{35CBEB15-8EA2-4B6F-827F-373906CC52C2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EcommerceWeb.DataAccess", "EcommerceWeb.DataAccess\EcommerceWeb.DataAccess.csproj", "{BDA4FCCA-B949-45A8-8F5E-140F7267D6BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EcommerceWeb.DataAccess", "EcommerceWeb.DataAccess\EcommerceWeb.DataAccess.csproj", "{BDA4FCCA-B949-45A8-8F5E-140F7267D6BE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EcommerceWeb.Repositories", "EcommerceWeb.Repositories\EcommerceWeb.Repositories.csproj", "{B6BFF42B-DDAE-4A21-B781-C7D00C5A059E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EcommerceWeb.Repositories", "EcommerceWeb.Repositories\EcommerceWeb.Repositories.csproj", "{B6BFF42B-DDAE-4A21-B781-C7D00C5A059E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EcommerceWeb.Entities", "EcommerceWeb.Entities\EcommerceWeb.Entities.csproj", "{7D40EB29-03F7-4CA3-B86A-3BEB064AA732}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EcommerceWeb.Entities", "EcommerceWeb.Entities\EcommerceWeb.Entities.csproj", "{7D40EB29-03F7-4CA3-B86A-3BEB064AA732}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
