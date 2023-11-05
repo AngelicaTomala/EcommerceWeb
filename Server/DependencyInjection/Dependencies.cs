@@ -1,6 +1,7 @@
 ﻿using EcommerceWeb.Repositories.Implementaciones;
 using EcommerceWeb.Repositories.Interfaces;
 using EcommerceWeb.Server.Perfiles;
+using EcommerceWeb.Server.Services;
 using System.Runtime.CompilerServices;
 
 namespace EcommerceWeb.Server.DependencyInjection
@@ -27,6 +28,11 @@ namespace EcommerceWeb.Server.DependencyInjection
 			});
 
 			return services;
+		}
+
+		public static IServiceCollection AddServices(this IServiceCollection services)
+		{
+			return services.AddTransient<IFileUploader, FileUploader>();
 		}
 	}
 }

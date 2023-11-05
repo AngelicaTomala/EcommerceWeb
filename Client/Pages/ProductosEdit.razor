@@ -1,4 +1,5 @@
 ﻿@page "/productos/editar/{Id:int}"
+@using EcommerceWeb.Shared.Request;
 @inject HttpClient HttpClient
 @inject NavigationManager NavigationManager
 @inject IToastService ToastService
@@ -9,7 +10,7 @@
 @code {
 	[Parameter]
 	public int Id { get; set; }
-	public ProductoDto Producto { get; set; } = new ProductoDto();
+	public ProductoDtoRequest Producto { get; set; } = new ProductoDtoRequest();
 	public ICollection<CategoriaDto> Categorias { get; set; } = new List<CategoriaDto>();
 	public ICollection<MarcaDTO> Marcas { get; set; } = new List<MarcaDTO>();
 
@@ -45,7 +46,7 @@
 
 			//en el caso de que no este mal lo colo de la siguiente manera
 			//como sabemos que es asincrona le ponemos ! para que evite el null
-			Producto = (await response.Content.ReadFromJsonAsync<ProductoDto>())!;
+			Producto = (await response.Content.ReadFromJsonAsync<ProductoDtoRequest>())!;
 
 			var responseCategorias = await HttpClient.GetFromJsonAsync<ICollection<CategoriaDto>>("api/Categorias");
 			if (responseCategorias is not null)

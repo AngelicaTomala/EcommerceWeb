@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using EcommerceWeb.Entities;
 using EcommerceWeb.Repositories.Interfaces;
+using EcommerceWeb.Server.Services;
 using EcommerceWeb.Shared;
 using EcommerceWeb.Shared.Request;
 using Microsoft.AspNetCore.Http;
@@ -14,11 +15,13 @@ namespace EcommerceWeb.Server.Controllers
 	{
 		private readonly IProductoRepository _repository;
 		private readonly IMapper _mapper;
+		private readonly IFileUploader _fileUploader;
 
-		public ProductosController(IProductoRepository repository, IMapper mapper)
+		public ProductosController(IProductoRepository repository, IMapper mapper, IFileUploader FileUploader)
 		{
 			_repository = repository;
 			_mapper = mapper;
+			_fileUploader = FileUploader;
 		}
 
 		[HttpGet]
@@ -60,6 +63,7 @@ namespace EcommerceWeb.Server.Controllers
 			//};
 
 			var producto = _mapper.Map<Producto>(request);
+			producto.UrlImagen = await _fileUploader.UploadFileAsync(request.Base64Imagen, request.NombreArchivo);
 
 			await _repository.AddAsync(producto);
 			return Ok();
@@ -81,6 +85,18 @@ namespace EcommerceWeb.Server.Controllers
 			//registro.CategoriaId = request.CategoriaId;
 			//registro.MarcaId = request.MarcaId;
 			//registro.PrecioUnitario = request.PrecioUnitario;
+
+			if(!string.IsNullOrWhiteSpace(request.Base64Imagen))
+			{
+				if (string.IsNullOrWhiteSpace(registro.UrlImagen))
+				{
+					registro.UrlImagen = await _fileUploader.UploadFileAsync(request.Base64Imagen, request.NombreArchivo);
+				}
+				else
+				{
+					registro.UrlImagen = await _fileUploader.UploadFileAsync(request.Base64Imagen, request.NombreArchivo);
+				}				
+			}
 
 			_mapper.Map(request, registro);
 

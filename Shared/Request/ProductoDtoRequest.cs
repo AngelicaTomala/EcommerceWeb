@@ -13,5 +13,10 @@ namespace EcommerceWeb.Shared.Request
 		public decimal PrecioUnitario { get; set; }
 		public int MarcaId { get; set; }
 		public int CategoriaId { get; set; }
+		public string? UrlImagen { get; set; }
+
+		public string? Base64Imagen { get; set; }
+		public string? NombreArchivo { get; set; }
+
 	}
 }

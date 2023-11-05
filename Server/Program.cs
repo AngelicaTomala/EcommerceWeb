@@ -19,7 +19,8 @@ builder.Services.AddDbContext<EcommerceDbContext>(options =>
 });
 
 builder.Services.AddRepositories()
-	.AddAutoMappers();
+	.AddAutoMappers()
+	.AddServices();
 
 
 
