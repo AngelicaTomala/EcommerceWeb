@@ -27,6 +27,7 @@
 		}
 	}
 
+	//este metodo es para llenar(inicializar) los combos
 	protected override async Task OnInitializedAsync()
 	{
 		var responseCategorias = await HttpClient.GetFromJsonAsync<ICollection<CategoriaDto>>("api/Categorias");

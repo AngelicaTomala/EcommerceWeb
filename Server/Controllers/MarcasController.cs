@@ -1,5 +1,6 @@
 ﻿using EcommerceWeb.Entities;
 using EcommerceWeb.Repositories.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,6 +23,7 @@ namespace EcommerceWeb.Server.Controllers
 		}
 
 		[HttpPost]
+		[Authorize]
 		public async Task<IActionResult> Post(Marca request)
 		{
 			await _repository.AddAsync(request);

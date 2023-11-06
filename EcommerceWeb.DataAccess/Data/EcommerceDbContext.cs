@@ -1,9 +1,12 @@
-﻿using EcommerceWeb.Entities;
+﻿using EcommerceWeb.DataAccess;
+using EcommerceWeb.Entities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using System.Reflection;
 
-public class EcommerceDbContext:DbContext
+public class EcommerceDbContext:IdentityDbContext<IdentityUserECommerce>
 {
     public EcommerceDbContext(DbContextOptions<EcommerceDbContext> options)
         : base(options)
@@ -43,6 +46,28 @@ public class EcommerceDbContext:DbContext
 
 		//FLUENT API
 		modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+
+		//Identity
+		//para personalizar las tablas. para que se cree con el nombre que nosotros deseemos usuario
+
+		//AspNetUsers
+		modelBuilder.Entity<IdentityUserECommerce>(e =>
+		{
+			e.ToTable("Usuario");
+		});
+
+		//AspNetRoles
+		modelBuilder.Entity<IdentityRole>(e =>
+		{
+			e.ToTable("Rol");
+		});
+
+		//AspNetUsersRoles
+		modelBuilder.Entity<IdentityUserRole<String>>(e =>
+		{
+			e.ToTable("UsuarioRol");
+		});
 	}
 
 	//este metodo sirve para establecer a manera general algo: por ejemplo que todos lo que sea definido como string sean varchar o 
