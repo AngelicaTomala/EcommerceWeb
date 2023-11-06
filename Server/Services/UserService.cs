@@ -1,4 +1,7 @@
 ﻿using EcommerceWeb.DataAccess;
+using EcommerceWeb.Entities;
+using EcommerceWeb.Repositories.Interfaces;
+using EcommerceWeb.Shared;
 using EcommerceWeb.Shared.Configuracion;
 using EcommerceWeb.Shared.Request;
 using EcommerceWeb.Shared.Response;
@@ -6,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security;
 using System.Security.Claims;
 using System.Text;
@@ -17,12 +21,14 @@ namespace EcommerceWeb.Server.Services
 		private readonly UserManager<IdentityUserECommerce> _userManager;
 		private readonly ILogger<UserService> _logger;
 		private readonly IOptions<AppSettings> _options;
+		private readonly IClienteRepository _clienteRepository;
 
-		public UserService(UserManager<IdentityUserECommerce> userManager, ILogger<UserService> logger, IOptions<AppSettings> options)
+		public UserService(UserManager<IdentityUserECommerce> userManager, ILogger<UserService> logger, IOptions<AppSettings> options, IClienteRepository clienteRepository)
         {
 			_userManager = userManager;
 			_logger = logger;
 			_options = options;
+			_clienteRepository = clienteRepository;
 		}
         public async Task<LoginDtoResponse> LoginAsync(LoginDtoRequest request)
 		{
@@ -86,6 +92,62 @@ namespace EcommerceWeb.Server.Services
 			{
 				response.MensajeError = "Error de autenticacion";
 				_logger.LogCritical(ex, "Error al autenticar {Message}", ex.Message);
+			}
+
+			return response;
+		}
+
+		public async Task<BaseResponse> RegisterAsync(RegistrarUsuarioDto request)
+		{
+			var response = new BaseResponse();
+
+			try
+			{
+				var user = new IdentityUserECommerce()
+				{
+					NombreCompleto = request.NombreCompleto,
+					FechaNacimeinto = request.FechaNacimiento,
+					Direccion = request.Direccion,
+					UserName = request.NombreUsuario,
+					Email = request.Email,
+					EmailConfirmed = true
+				};
+
+				var result = await _userManager.CreateAsync(user, request.Password);
+
+				if(result.Succeeded)
+				{
+					await _userManager.AddToRoleAsync(user, Constantes.RolCliente);
+
+					var cliente = new Cliente
+					{
+						Nombres = request.NombreCompleto.Split(" ", StringSplitOptions.RemoveEmptyEntries).First(),
+						Apellidos = request.NombreCompleto.Split(" ", StringSplitOptions.RemoveEmptyEntries).Last(),
+						Email = request.Email,
+						FechaNacimiento = request.FechaNacimiento,
+						TipoClienteId = 1
+					};
+					await _clienteRepository.AddAsync(cliente);
+				}
+				else
+				{
+					var sb = new StringBuilder();
+
+					foreach (var identityError in result.Errors)
+					{
+						sb.AppendFormat("{0}", identityError.Description);
+					}
+
+					response.MensajeError = sb.ToString();
+					sb.Clear();
+				}
+
+				response.Exito = result.Succeeded;
+			}
+			catch (Exception ex)
+			{
+				response.MensajeError = "Error al regostrar";
+				_logger.LogCritical(ex, "{MensajeError} {Message}", response.MensajeError, ex.Message);
 			}
 
 			return response;

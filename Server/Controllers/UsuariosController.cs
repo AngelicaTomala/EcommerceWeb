@@ -23,5 +23,14 @@ namespace EcommerceWeb.Server.Controllers
 			var response = await _service.LoginAsync(request);
 			return response.Exito ? Ok(response) : Unauthorized(response);
 		}
+
+		//POST: api/Usuarios/Register
+		[HttpPost]
+		public async Task<IActionResult>Register(RegistrarUsuarioDto request)
+		{
+			var response = await _service.RegisterAsync(request);
+
+			return response.Exito ? Ok(response) : BadRequest(response);
+		}
     }
 }

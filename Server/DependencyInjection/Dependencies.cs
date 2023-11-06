@@ -15,7 +15,8 @@ namespace EcommerceWeb.Server.DependencyInjection
 																					   //builder.Services.AddSingleton<ICategoriaRepository, CategoriaMemoryRepository>();//si hace el efecto de agregar porque utiliza la misma instancia para la aplicacion
 
 			.AddTransient<IMarcaRepository, MarcaRepository>()
-			.AddTransient<IProductoRepository, ProductoRepository>();
+			.AddTransient<IProductoRepository, ProductoRepository>()
+			.AddTransient<IClienteRepository, ClienteRepository>();
 
 			return services;
 		}
