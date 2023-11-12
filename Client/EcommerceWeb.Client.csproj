@@ -21,4 +21,8 @@
     <ProjectReference Include="..\Shared\EcommerceWeb.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\assets\imagenes\" />
+  </ItemGroup>
+
 </Project>

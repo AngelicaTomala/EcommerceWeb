@@ -26,7 +26,7 @@ namespace EcommerceWeb.Shared.Request
 		[Required]
 		public string Password { get; set; } = default!;
 
-		[Compare(nameof(Password))]
+		[Compare(nameof(Password),ErrorMessage = "Las claves no coinciden.")]
 		public string ConfirmPassword { get; set; } = default!;
 	}
 }

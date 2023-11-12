@@ -10,12 +10,36 @@ using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Serilog;
+using Serilog.Events;
+using Serilog.Sinks.MSSqlServer;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using System.Diagnostics.SymbolStore;
 using System.Reflection.Metadata;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
+
+var logger = new LoggerConfiguration()
+	.WriteTo.Console(LogEventLevel.Information)
+	.WriteTo.File("..\\registro-.log", 
+		outputTemplate:"{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level:u3}] {Message:lj}{NewLine}{Exception}",
+		restrictedToMinimumLevel:LogEventLevel.Error,
+		rollingInterval:RollingInterval.Day)
+	.WriteTo.MSSqlServer(builder.Configuration.GetConnectionString("EcommerceDB"),
+	new MSSqlServerSinkOptions
+	{
+		AutoCreateSqlTable= true,
+		TableName="BlazorLogs"
+	}, restrictedToMinimumLevel: LogEventLevel.Error)
+
+	.CreateLogger();
+
+//para borrar el login del asp net
+builder.Logging.ClearProviders();
+
+//para agtegar lo del serilog
+builder.Logging.AddSerilog(logger);
 
 // Add services to the container.
 

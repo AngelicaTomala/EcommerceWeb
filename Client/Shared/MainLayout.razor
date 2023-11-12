@@ -1,7 +1,21 @@
 ﻿@inherits LayoutComponentBase
 <BlazoredToasts />
 
-<div class="page">
+<div>
+    <NavMenu/>
+</div>
+
+<div class="container-fluid content position-relative h-100">
+    @Body
+</div>
+<footer class="border-top footer">
+    <div class="container d-none d-lg-block">
+        <label>®2023 - Galaxy Training <i class="bi bi-heart-fill me-1"></i></label>
+        <NavLink class="text-dark" href="https://galaxy.edu.pe" target="_blank">Saber màs</NavLink>
+    </div>
+</footer>
+
+@* <div class="page">
     <div class="sidebar">
         <NavMenu />
     </div>
@@ -15,4 +29,4 @@
             @Body
         </article>
     </main>
-</div>
+</div> *@

@@ -86,7 +86,7 @@ namespace EcommerceWeb.Server.Services
 			catch (SecurityException ex)
 			{
 				response.MensajeError = ex.Message;
-				_logger.LogCritical(ex, "Error de seguridad {Message}", ex.Message);
+				_logger.LogError(ex, "Error de seguridad {Message}", ex.Message);
 			}
 			catch (Exception ex)
 			{
