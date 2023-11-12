@@ -14,7 +14,8 @@ namespace EcommerceWeb.Shared
 		public decimal PrecioUnitario { get; set; }
         public string Marca { get; set; } = default!;
 		public string Categoria { get; set; } = default!;
-        public int MarcaId { get; set; }
+		public string? UrlImagen { get; set; }
+		public int MarcaId { get; set; }
         public int CategoriaId { get; set; }
     }
 }

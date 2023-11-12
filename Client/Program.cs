@@ -25,6 +25,7 @@ builder.Services.AddBlazoredSessionStorage();
 
 //scopped es po sesion.- solo se crea una sola vez por sesion de usuario
 builder.Services.AddScoped<IUserProxy, UserProxy>();
+builder.Services.AddScoped<IProductoProxy, ProductoProxy>();
 
 //habilitamos el contexto de seguridad en blazor
 builder.Services.AddScoped<AuthenticationStateProvider, AuthenticationService>();
