@@ -44,7 +44,7 @@
 		<div class="row gx-4 row-cols-1 row-cols-md-3 row-cols-xl-5 justify-content-center">
 			@foreach(var producto in filter)
 			{
-				<ProductCard Producto="producto" OnClik="VerDetalle" />
+				<ProductCard Producto="producto" OnClick="VerDetalle" />
 			}
 		</div>
 	</div>
@@ -110,8 +110,8 @@
 		}		
 	}
 
-	private void VerDetalle()
+	private void VerDetalle(int id)
 	{
-		NavigationManager.NavigateTo($"/detalle/[id]");
+		NavigationManager.NavigateTo($"/detalle/{id}");
 	}
 }

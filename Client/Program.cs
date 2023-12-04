@@ -6,6 +6,7 @@ using EcommerceWeb.Client;
 using EcommerceWeb.Client.Auth;
 using EcommerceWeb.Client.Proxy.Interfaces;
 using EcommerceWeb.Client.Proxy.Services;
+using ECommerceWeb.Client.Proxy.Services;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -26,6 +27,8 @@ builder.Services.AddBlazoredSessionStorage();
 //scopped es po sesion.- solo se crea una sola vez por sesion de usuario
 builder.Services.AddScoped<IUserProxy, UserProxy>();
 builder.Services.AddScoped<IProductoProxy, ProductoProxy>();
+builder.Services.AddScoped<ICarritoProxy, CarritoProxy>();
+builder.Services.AddScoped<IVentaProxy, VentaProxy>();
 
 //habilitamos el contexto de seguridad en blazor
 builder.Services.AddScoped<AuthenticationStateProvider, AuthenticationService>();

@@ -1,13 +1,10 @@
 ﻿using EcommerceWeb.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using EcommerceWeb.Repositories.Interfaces;
+using ECommerceWeb.Entities;
 
-namespace EcommerceWeb.Repositories.Interfaces
+namespace ECommerceWeb.Repositories.Interfaces;
+
+public interface IClienteRepository : IRepositoryBase<Cliente>
 {
-	public interface IClienteRepository : IRepositoryBase<Cliente>
-	{
-	}
+    Task<Cliente?> BuscarPorEmailAsync(string email);
 }

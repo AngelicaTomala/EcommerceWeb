@@ -5,6 +5,7 @@ using EcommerceWeb.Shared;
 using EcommerceWeb.Shared.Configuracion;
 using EcommerceWeb.Shared.Request;
 using EcommerceWeb.Shared.Response;
+using ECommerceWeb.Repositories.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;

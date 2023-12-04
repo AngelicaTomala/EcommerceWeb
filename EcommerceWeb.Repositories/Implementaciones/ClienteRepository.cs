@@ -1,5 +1,7 @@
 ﻿using EcommerceWeb.Entities;
 using EcommerceWeb.Repositories.Interfaces;
+using ECommerceWeb.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +15,10 @@ namespace EcommerceWeb.Repositories.Implementaciones
 		public ClienteRepository(EcommerceDbContext _context) : base(_context)
 		{
 		}
-	}
+
+        public async Task<Cliente?> BuscarPorEmailAsync(string email)
+        {
+            return await context.Set<Cliente>().FirstOrDefaultAsync(p => p.Email == email);
+        }
+    }
 }

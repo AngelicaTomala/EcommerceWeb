@@ -4,6 +4,7 @@ using EcommerceWeb.Repositories.Interfaces;
 using EcommerceWeb.Server.DependencyInjection;
 using EcommerceWeb.Server.Perfiles;
 using EcommerceWeb.Shared.Configuracion;
+using ECommerceWeb.Server;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.ResponseCompression;
@@ -54,6 +55,7 @@ builder.Services.AddDbContext<EcommerceDbContext>(options =>
 {
 	options.UseSqlServer(builder.Configuration.GetConnectionString("EcommerceDB"));
 	options.EnableSensitiveDataLogging();//para habilitar y asu poder los datos que se envian
+	options.LogTo(LoggerPersonalizado.Log,LogLevel.Information);//log exlusive para ef independiente de la aplicacion
 });
 
 //Configuramos ASP .Net Identity

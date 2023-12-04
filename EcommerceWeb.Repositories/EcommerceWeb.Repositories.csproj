@@ -7,6 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.1.21" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.13" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\EcommerceWeb.DataAccess\EcommerceWeb.DataAccess.csproj" />
     <ProjectReference Include="..\EcommerceWeb.Entities\EcommerceWeb.Entities.csproj" />
   </ItemGroup>

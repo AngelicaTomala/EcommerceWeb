@@ -22,7 +22,7 @@ namespace EcommerceWeb.Repositories.Implementaciones
         {
 			context = _context;
 		}
-        public async Task AddAsync(TEntity entity)
+        public virtual async Task AddAsync(TEntity entity)
 		{
 			await context.Set<TEntity>().AddAsync(entity);
 			await context.SaveChangesAsync();
